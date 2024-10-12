@@ -44,7 +44,7 @@ class LoginController extends Controller
                 return redirect('/dashboard/owner');
             }
         }else{
-            return redirect('')->withErrors('user pw tidak sesuai')->withInput();
+            return redirect('')->withErrors('Login Gagal, Harap periksa kembali email dan password anda')->withInput();
         }
     }
 
@@ -108,7 +108,7 @@ class LoginController extends Controller
         $token = PasswordResetToken::where('token', $request->token)->first();
     
         if (!$token) {
-            return redirect()->route('forgot-password')->with('error', 'Token salah berubah');
+            return redirect()->route('forgot-password')->with('error', 'Token tidak sesuai atau telah berubah');
         }
     
         $user = User::where('email', $token->email)->first();

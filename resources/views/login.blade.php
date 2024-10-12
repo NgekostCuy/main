@@ -12,30 +12,31 @@
 </head>
 <body class="bg-[url('img/login-bg.png')] bg-no-repeat m-0 h-max bg-cover">
     <div class="flex items-center justify-center h-screen">
-        @if(session()->has('success'))
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-            <div>
-              {{ session('success') }}
-            </div>
-          </div>
-        @endif
-        
-
         <div class="bg-white p-8 rounded-lg shadow-md w-96">
             <h2 class="text-xl text-teal-600 font-bold mb-4">NgekosCuy
                 <span class="text-gray-600 font-bold">
                     Login
                 </span>
              </h2>
-        @if ($errors->any())<div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $item)
-                    <li>{{ $item }}</li>
-                @endforeach
-            </ul>
-        </div>
+
+             @if(session()->has('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 my-1 px-3 py-2 rounded relative text-sm" role="alert">
+                <div>
+                    {{ session('success') }}
+                </div>
+            </div>
         @endif
+
+             @if ($errors->any())
+             <div class="bg-red-100 border border-red-400 text-red-700 my-1 px-3 py-2 rounded relative text-sm" role="alert">
+                 <ul>
+                     @foreach ($errors->all() as $item)
+                         <li>{{ $item }}</li>
+                     @endforeach
+                 </ul>
+             </div>
+         @endif
+
         <form action="" method="POST">
             @csrf
             <div class="mb-3">
@@ -51,7 +52,7 @@
                <a href="/forgot-password">Lupa Kata Sandi?</a>
             </div>
 
-            <div class="mb-3 d-grid">
+            <div class="mb-3 grid">
                 <button name="submit" type="submit" class="bg-teal-600 text-white p-3 w-full rounded-md mb-4">Login</button>
             </div>
 

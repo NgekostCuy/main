@@ -28,7 +28,7 @@ class RegisterController extends Controller
 
         User::create($inforegister);
 
-        $request->session()->flash('success', 'Task was successful!');
+        $request->session()->flash('success', 'Account Created Succesfully');
 
         return redirect('/');
     }
