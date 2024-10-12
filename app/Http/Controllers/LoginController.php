@@ -83,7 +83,7 @@ class LoginController extends Controller
 
         Mail::to($request->email)->send(new ResetPasswordMail($token));
 
-        return redirect()->route('forgot-password')->with('alert','email reset sudah dikirimkan');
+        return redirect()->route('forgot-password')->with('alert','Harap Periksa Email Anda untuk membuat kata sandi baru');
     }
 
     function validation_forgot_password(Request $request, $token) {

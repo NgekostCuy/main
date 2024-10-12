@@ -11,8 +11,6 @@
     <div class="container py-5">
         <div class="w-50 center border rounded px-3 py-3 mx-auto">
             <h1>Masukkan Password Baru</h1>
-
-            <!-- Pesan Error -->
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
