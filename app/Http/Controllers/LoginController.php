@@ -21,6 +21,11 @@ class LoginController extends Controller
         return view('index');
     }
 
+    public function detail()
+{
+    return view('detail'); // Ganti dengan nama view yang sesuai
+}
+
     function login(Request $request) {
         $request->validate([
             'email'=>'required',
@@ -39,7 +44,7 @@ class LoginController extends Controller
             if(Auth::user()->role == 'admin'){
                 return redirect('/dashboard/admin');
             }else if(Auth::user()->role == 'user'){
-                return redirect()->route('home');
+                return redirect()->route('/dashboard/user');
             }else if(Auth::user()->role == 'owner'){
                 return redirect('/dashboard/owner');
             }

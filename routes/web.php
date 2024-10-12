@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function(){
 
     // redirect ke halaman home
     Route::get('/home', [LoginController::class, 'home'])->name('home');
-
     Route::get('/logout',[LoginController::class, 'logout']);        
+    Route::get('/detail', [LoginController::class, 'detail'])->name('detail');
 });
 

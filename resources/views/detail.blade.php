@@ -7,16 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Halaman Home</h1>
-    
-    @guest
-        <button><a href="/login">login</a></button>
-        <button><a href="/register">register</a></button>
-    @endguest
+    <h1>Halaman Detail</h1>
 
     @auth
-        <p>Selamat datang, {{ Auth::user()->name }}!</p>
-        <button><a href="/detail">detail</a></button>
+        <p>Detail, {{ Auth::user()->name }}!</p>
+        <button><a href="/detail">login</a></button>
     @endauth
 
     <p>Status autentikasi: {{ Auth::check() ? 'Logged in' : 'Not logged in' }}</p>
