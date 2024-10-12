@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-main branch
-=======
 # Authentication
 ---
 
@@ -8,5 +5,3 @@ main branch
 - Login
 - Register
 - Reset Password
-
->>>>>>> authentication
