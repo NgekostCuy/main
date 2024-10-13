@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class RegisterController extends Controller
 {
     function index() {
-        return view('register');
+        return view('auth.register');
     }
 
     function store(Request $request){

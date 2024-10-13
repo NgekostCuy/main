@@ -11,7 +11,9 @@
 
     @auth
         <p>Detail, {{ Auth::user()->name }}!</p>
-        <button><a href="/detail">login</a></button>
+        <button><a href="/detail">detail</a></button>
+        <button><a href="/home">back</a></button>
+        <button><a href="/dashboard/admin">dashboard</a></button>
     @endauth
 
     <p>Status autentikasi: {{ Auth::check() ? 'Logged in' : 'Not logged in' }}</p>

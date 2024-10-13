@@ -6,8 +6,10 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function(){
-    Route::post('/', [LoginController::class, 'login']);
-    Route::get('/', [LoginController::class, 'index'])->name('login');
+    Route::get('/', [LoginController::class, 'home'])->name('home');
+
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
 
     Route::get('/forgot-password', [LoginController::class, 'forgot_password'])->name('forgot-password');
     Route::post('/forgot-password-act', [LoginController::class, 'forgot_password_act'])->name('forgot-password-act');
@@ -33,5 +35,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/home', [LoginController::class, 'home'])->name('home');
     Route::get('/logout',[LoginController::class, 'logout']);        
     Route::get('/detail', [LoginController::class, 'detail'])->name('detail');
+    Route::get('/favorite', [LoginController::class, 'favorite'])->name('favorite');
 });
 

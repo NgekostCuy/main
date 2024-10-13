@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 class LoginController extends Controller
 {
     function index() {
-        return view('login');
+        return view('auth.login');
     }
 
     function home() {
@@ -22,9 +22,14 @@ class LoginController extends Controller
     }
 
     public function detail()
-{
-    return view('detail'); // Ganti dengan nama view yang sesuai
-}
+    {
+        return view('detail'); // Ganti dengan nama view yang sesuai
+    }
+
+    public function favorite()
+    {
+        return view('detail'); // Ganti dengan nama view yang sesuai
+    }
 
     function login(Request $request) {
         $request->validate([
@@ -44,7 +49,7 @@ class LoginController extends Controller
             if(Auth::user()->role == 'admin'){
                 return redirect('/dashboard/admin');
             }else if(Auth::user()->role == 'user'){
-                return redirect()->route('/dashboard/user');
+                return redirect('/dashboard/user');
             }else if(Auth::user()->role == 'owner'){
                 return redirect('/dashboard/owner');
             }
