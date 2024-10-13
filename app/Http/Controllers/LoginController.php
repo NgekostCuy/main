@@ -64,7 +64,7 @@ class LoginController extends Controller
     }
 
     function forgot_password() {
-        return view('forgot_password');
+        return view('auth.forgot_password');
     }
 
     function forgot_password_act(Request $request) {

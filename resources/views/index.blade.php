@@ -7,7 +7,7 @@
     <title>NgekostCuy</title>
 </head>
 <body>
-    <h1>Halaman Home</h1>
+    <h1>Ini Halaman Home Cuy</h1>
     
     @guest
         <button><a href="/login">login</a></button>
