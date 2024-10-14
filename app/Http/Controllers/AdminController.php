@@ -27,10 +27,11 @@ class AdminController extends Controller
         echo "<a href='/logout'>Logout</a>";
     }
     function owner() {
-        echo 'Welcome owner';
-        echo "<h1>".Auth::user()->name."</h1>";
-        echo "<h1>owner</h1>";
-        echo "<a href='/logout'>Logout</a>";
+        // echo 'Welcome owner';
+        // echo "<h1>".Auth::user()->name."</h1>";
+        // echo "<h1>owner</h1>";
+        // echo "<a href='/logout'>Logout</a>";
+          return view('dashboard/owner');
     }
 
 }

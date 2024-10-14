@@ -28,7 +28,7 @@ Route::get('/home', function ()  {
 Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard',[AdminController::class, 'index']);
     Route::get('/dashboard/admin',[AdminController::class, 'admin'])->middleware('UserAkses:admin');
-    Route::get('/dashboard/owner',[AdminController::class, 'owner'])->middleware('UserAkses:owner');
+    Route::get('/dashboard/owner',[AdminController::class, 'owner'])->name('owner');
     Route::get('/dashboard/user',[AdminController::class, 'user'])->middleware('UserAkses:user');
 
     // redirect ke halaman home
