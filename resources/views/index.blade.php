@@ -44,11 +44,18 @@
                         <a href='/favorit' class='hover:text-[#007bff] text-[15px] text-gray-700 block font-bold'>Favorit</a>
                     </li>
                     
-                    <li class='max-lg:border-b max-lg:py-3'>
+                    @auth
+                        foto profil
+                    @endauth
+
+                    @guest
+                        
+                    <li class='max-lg:border-b max-lg:py-3 flex justify-center'>
                         <button class="bg-teal-600 px-5 py-2 rounded">
                             <a href='/login' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Login</a>
                         </button>
                     </li>
+                    @endguest
                 </ul>
             </div>
         </div>
