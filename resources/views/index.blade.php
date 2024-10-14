@@ -45,7 +45,7 @@
                     </li>
                     
                     @auth
-                        foto profil
+                        Profile
                     @endauth
 
                     @guest
