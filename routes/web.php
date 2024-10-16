@@ -25,6 +25,12 @@ Route::get('/home', function ()  {
     return redirect('dashboard');
 });
 
+Route::get('/favorit', function ()  {
+    return view('favorite');
+});
+
+Route::get('/detail', [LoginController::class, 'detail'])->name('detail');
+
 Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard',[AdminController::class, 'index']);
     Route::get('/dashboard/admin',[AdminController::class, 'admin'])->middleware('UserAkses:admin');
