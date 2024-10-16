@@ -14,19 +14,19 @@
     <aside class="pt-4">
         <ul>
             <li class="pb-2.5 "><a class="bg-gray-800 rounded-r-full text-white flex gap-6 pl-10 pr-20 py-2.5" href=""><x-ionicon-home-outline class="w-7"/>Home</a></li>
-            <li class=""><a class="flex gap-6 pl-10 pr-20 py-2.5 hover:text-red-600" href=""><x-heroicon-o-arrow-right-start-on-rectangle class="w-7 [stroke-width:1.5]"/>Keluar</a></li>
-        </ul>
+            <li class=""><a class="flex gap-6 pl-10 pr-20 py-2.5 text-red-600" href=""><x-heroicon-o-arrow-right-start-on-rectangle class="w-7 [stroke-width:1.5]"/>Keluar</a></li>
+        </ul> 
     </aside>
     <div class="bg-gray-50 ">
         <div class="py-8 px-10">
             <div class="flex border-b mb-8">
                 <div class="mr-28 pb-9">
                     <p class="mb-5 font-medium">Data Kost</p>
-                    <Button class=" bg-teal-600 text-white rounded py-2.5 px-8">Tambah Data Kost</Button>
+                    <Button class="text-sm border-teal-600 bg-teal-600 text-white border-2 rounded py-1.5 px-8">Tambah Data Kost</Button>
                 </div>
                 <div class=" pl-8 border-l pb-9">
                     <p class="mb-5 font-medium">Pusat Bantuan</p>
-                    <Button class=" border-teal-600 text-teal-600 rounded border-2 py-2 px-14">Chat CS</Button>
+                    <Button class="text-sm border-teal-600 text-teal-600 rounded border-2 py-1.5 px-14">Chat CS</Button>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

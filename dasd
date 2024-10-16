@@ -1,0 +1,27 @@
+*   [33m89e56f6[m[33m ([m[1;31morigin/production[m[33m, [m[1;32mproduction[m[33m)[m feature: fetch data from branch  features/dashboard
+[31m|[m[32m\[m  
+[31m|[m * [33mf12dd6c[m[33m ([m[1;36mHEAD -> [m[1;32mfeatures/dashboard[m[33m, [m[1;31morigin/features/dashboard[m[33m)[m feature: add dashboard home
+* [32m|[m [33mb9faaca[m add readme
+[32m|[m [32m|[m * [33m0dbb024[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m add role view
+[32m|[m [32m|[m * [33m6579506[m fix interface only : home & detail
+[32m|[m [32m|[m * [33m53d7c1e[m add interface only : home & detail
+[32m|[m [32m|[m * [33mc7302c5[m commit
+[32m|[m [32m|[m[32m/[m  
+[32m|[m * [33m2b86aed[m move directory : auth
+[32m|[m * [33medf676b[m add intent : intent from login to home to detail
+[32m|[m * [33m8338e0f[m update : update forgot password route
+[32m|[m * [33mf521dd9[m update interface : mailing * forgot password interface
+[32m|[m * [33mbd202e3[m update interface : login, register & reset password
+[32m|[m * [33m62962b4[m update : readme
+[32m|[m * [33m91829eb[m add interface : login page
+[32m|[m *   [33m952639a[m merge branch main & authetication
+[32m|[m [34m|[m[35m\[m  
+[32m|[m [34m|[m * [33m58aaf2c[m[33m ([m[1;31morigin/authentication[m[33m)[m add readme
+[32m|[m [34m|[m * [33m83d2d2f[m add featured | Backend : Login, Register & Reset Password
+[32m|[m [34m|[m[32m/[m  
+[32m|[m[32m/[m[34m|[m   
+[32m|[m * [33m01b5861[m[33m ([m[1;31morigin/features/detailKost[m[33m, [m[1;31morigin/features/Home[m[33m)[m add readme
+[32m|[m[32m/[m  
+[32m|[m * [33m9922cb1[m[33m ([m[1;31morigin/staging[m[33m)[m add readme
+[32m|[m[32m/[m  
+* [33mdf1fb7e[m add readme
