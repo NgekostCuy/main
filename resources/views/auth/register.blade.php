@@ -64,7 +64,7 @@
                 <button name="submit" type="submit" class="bg-teal-600 text-white p-3 w-full rounded-md mb-4">Register</button>
             </div>
             <p class="flex justify-end text-xs text-gray-600"> Sudah punya akun?
-                <a href="/" :active="request()->is('login')" class="ms-1 mb-4 flex justify-end text-xs text-red-500 hover:underline">Login disini</a></p>
+                <a href="/login" :active="request()->is('login')" class="ms-1 mb-4 flex justify-end text-xs text-red-500 hover:underline">Login disini</a></p>
         </form>
     </div> 
     </div>
