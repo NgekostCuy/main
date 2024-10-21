@@ -31,7 +31,7 @@ class AdminController extends Controller
         // echo "<h1>".Auth::user()->name."</h1>";
         // echo "<h1>owner</h1>";
         // echo "<a href='/logout'>Logout</a>";
-          return view('dashboard/owner');
+          return view('dashboard.owner');
     }
 
 }
