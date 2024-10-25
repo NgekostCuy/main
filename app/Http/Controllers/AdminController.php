@@ -48,16 +48,16 @@ class AdminController extends Controller
             'telepon' => 'required|string|regex:/^[0-9]{10,15}$/',
             'harga' => 'required|numeric',
             'total_kamar' => 'required|integer',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        // // Menghandle file upload
-        // if ($request->hasFile('image')) {
-        //     $imageName = time().'.'.$request->image->extension();
-        //     $request->image->move(public_path('images'), $imageName);
-        // } else {
-        //     $imageName = ''; // Tindakan lain jika file tidak ditemukan
-        // }
+        // Menghandle file upload
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        } else {
+            $imageName = ''; // Tindakan lain jika file tidak ditemukan
+        }
 
         // Menyimpan data ke database
         $kost = new Kost();
@@ -68,7 +68,7 @@ class AdminController extends Controller
         $kost->nomor_hp = $request->telepon;
         $kost->harga = $request->harga;
         $kost->jumlah_kamar = $request->total_kamar;
-        // $kost->image = $request->image; // Simpan nama file gambar
+        $kost->image = $request->image; // Simpan nama file gambar
         $kost->save();
 
         // Redirect dengan pesan sukses
@@ -93,6 +93,7 @@ class AdminController extends Controller
         $kost->nomor_hp = $request->telepon;
         $kost->harga = $request->harga;
         $kost->jumlah_kamar = $request->total_kamar;
+        $kost->image = $request->image;
 
         $kost->update(); // Simpan perubahan ke database
 

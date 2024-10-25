@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('nomor_hp');
             $table->integer('harga');
             $table->integer('jumlah_kamar');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
