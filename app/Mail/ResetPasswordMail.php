@@ -37,7 +37,7 @@ class ResetPasswordMail extends Mailable
     {
         // dd($this->token);
         return new Content(
-            view: 'reset_password',
+            view: 'auth.reset_password',
             with:[
                 'token' => $this->token
             ]

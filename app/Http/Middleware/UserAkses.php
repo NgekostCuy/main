@@ -20,8 +20,10 @@ class UserAkses
         if (Auth::user()->role == $role) {
             return $next($request);
         }
-        return redirect('dashboard');
+        // Redirect ke 'dashboard/namarole'
+        return redirect('dashboard/' . Auth::user()->role);
     }
+
 
 }
 
