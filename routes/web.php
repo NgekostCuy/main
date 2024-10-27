@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/edit_kost/{id}', [AdminController::class, 'edit'])->name('kost.edit');
 
     // Rute untuk menyimpan data kost setelah di-edit
-    Route::post('/kost/{id}', [AdminController::class, 'update'])->name('kost.update');
+    Route::post('/kost/{id}', [AdminController::class, 'update'])->name('kost.update')->middleware('auth');
 
     // Rute untuk menghapus kost
     Route::delete('/kost/{id}', [AdminController::class, 'destroy'])->name('kost.destroy');

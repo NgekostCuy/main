@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('deskripsi');
             $table->string('peraturan');
             $table->string('nama_pemilik');
-            $table->integer('nomor_hp');
+            $table->string('nomor_hp');
             $table->integer('harga');
             $table->integer('jumlah_kamar');
             $table->string('image')->nullable();

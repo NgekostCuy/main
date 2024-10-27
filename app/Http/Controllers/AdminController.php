@@ -21,7 +21,11 @@ class AdminController extends Controller
         return view('dashboard.user');
     }
     function owner() {
-        $kosti = Kost::all();
+        // Mendapatkan username user yang sedang login
+        $username = auth()->user()->name;
+        // Mengambil data kost yang dimiliki oleh user dengan username tersebut
+        $kosti = Kost::where('nama_pemilik', $username)->get();
+    
         return view('dashboard.owner', compact('kosti'));
     }
 
@@ -38,42 +42,32 @@ class AdminController extends Controller
 
 
     public function submit_kost(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'peraturan' => 'required|string',
-            'nama_pemilik' => 'required|string|max:255',
-            'telepon' => 'required|string|regex:/^[0-9]{10,15}$/',
-            'harga' => 'required|numeric',
-            'total_kamar' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
+{
+    $validatedData = $request->validate([
+        'nama' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'peraturan' => 'required|string',
+        'telepon' => 'required|string|max:15',
+        'harga' => 'required|numeric',
+        'total_kamar' => 'required|integer',
+    ]);
 
-        // Menghandle file upload
-        if ($request->hasFile('image')) {
-            $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
-        } else {
-            $imageName = ''; // Tindakan lain jika file tidak ditemukan
-        }
+    $addKost = [
+        'nama' => $validatedData['nama'],
+        'deskripsi' => $validatedData['deskripsi'],
+        'peraturan' => $validatedData['peraturan'],
+        'nama_pemilik' => auth()->user()->name,
+        'nomor_hp' => $validatedData['telepon'],
+        'harga' => $validatedData['harga'],
+        'jumlah_kamar' => $validatedData['total_kamar'],
+    ];
 
-        // Menyimpan data ke database
-        $kost = new Kost();
-        $kost->nama = $request->nama;
-        $kost->deskripsi = $request->deskripsi;
-        $kost->peraturan = $request->peraturan;
-        $kost->nama_pemilik = $request->nama_pemilik;
-        $kost->nomor_hp = $request->telepon;
-        $kost->harga = $request->harga;
-        $kost->jumlah_kamar = $request->total_kamar;
-        $kost->image = $request->image; // Simpan nama file gambar
-        $kost->save();
+    Kost::create($addKost);
+    // dd(auth()->user()->username);
+    $request->session()->flash('success', 'Account Created Succesfully');
+    return redirect('/dashboard/owner');
+}
 
-        // Redirect dengan pesan sukses
-        return redirect('/dashboard/owner')->with('success', 'Data kost berhasil ditambahkan.');
-    }
 
     public function edit($id)
     {

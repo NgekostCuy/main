@@ -45,19 +45,40 @@
                         </div>
                     </div>
                     <div class="flex gap-4">
-                        <form action="{{ route('kost.destroy', $kost->id) }}" method="POST"> <!-- Form untuk menghapus kost -->
+                        <form id="deleteForm" action="{{ route('kost.destroy', $kost->id) }}" method="POST" class="flex-1">
                             @csrf
                             @method('DELETE') <!-- Metode DELETE untuk menghapus -->
-                            <button type="submit" class="basis-1/2 border-gray-900/50 text-gray-900/90 rounded border py-1.5">Hapus Kost</button>
+                            <button type="button" onclick="openModal()" class="w-full bg-red-600 hover:bg-red-700 text-white rounded py-2 transition duration-150 ease-in-out">Hapus Kost</button>
                         </form>
-                        <a href="{{ url('/edit_kost/' . $kost->id) }}" class="basis-1/2 border-teal-600 text-teal-600 rounded border py-1.5">Edit Kost</a>
+                        <a href="{{ url('/edit_kost/' . $kost->id) }}" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white rounded py-2 text-center transition duration-150 ease-in-out">Edit Kost</a>
                     </div>
                 </div>
                 @endforeach
+            </div>
+
+            <div id="confirmationModal" class="fixed inset-0 flex items-center justify-center z-50 hidden bg-gray-800 bg-opacity-50">
+                <div class="bg-white rounded-lg p-6 w-1/3">
+                    <h2 class="text-lg font-bold mb-4">Konfirmasi Penghapusan</h2>
+                    <p>Apakah Anda yakin ingin menghapus kost ini? Tindakan ini tidak dapat dibatalkan.</p>
+                    <div class="flex justify-end mt-4">
+                        <button onclick="closeModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded py-1 px-3 mr-2">Batal</button>
+                        <button onclick="document.getElementById('deleteForm').submit();" class="bg-red-600 hover:bg-red-700 text-white rounded py-1 px-3">Hapus</button>
+                    </div>
+                </div>
             </div>
             
         </div>
     </div>    
     </main>
 </body>
+
+<script>
+function openModal() {
+    document.getElementById('confirmationModal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('confirmationModal').classList.add('hidden');
+}
+</script>
 </html>
