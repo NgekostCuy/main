@@ -33,40 +33,56 @@ class AdminController extends Controller
         return view('owner.add_kost');
     }
 
+    public function submit_kost(Request $request)
+    {
+        // Validasi data input
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'peraturan' => 'required|string',
+            'telepon' => 'required|string|max:15',
+            'harga' => 'required|numeric',
+            'total_kamar' => 'required|integer',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk multiple images
+        ]);
+
+        // Simpan data kost ke dalam tabel kost
+        $kost = Kost::create([
+            'nama' => $validatedData['nama'],
+            'deskripsi' => $validatedData['deskripsi'],
+            'peraturan' => $validatedData['peraturan'],
+            'nama_pemilik' => auth()->user()->name,
+            'nomor_hp' => $validatedData['telepon'],
+            'harga' => $validatedData['harga'],
+            'jumlah_kamar' => $validatedData['total_kamar'],
+        ]);
+
+        // Cek apakah ada file gambar yang diunggah
+        if ($request->hasFile('images')) {
+            // Simpan setiap gambar yang diunggah
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('uploads/kost', 'public');
+
+                // Simpan data gambar ke dalam tabel kost_images
+                $kost->images()->create([
+                    'file_name' => $image->getClientOriginalName(),
+                    'file_path' => $path,
+                ]);
+            }
+        }
+
+        // Redirect kembali ke halaman dashboard dengan pesan sukses
+        return redirect('/dashboard/owner')->with('success', 'Data kost berhasil ditambahkan.');
+    }
+
+
+
     public function destroy($id)
     {
         $kost = Kost::findOrFail($id); // Mencari kost berdasarkan ID
         $kost->delete(); // Menghapus data kost
         return redirect()->route('dashboard.owner')->with('success', 'Kost berhasil dihapus.'); // Redirect ke rute owner dengan pesan sukses
     }
-
-
-    public function submit_kost(Request $request)
-{
-    $validatedData = $request->validate([
-        'nama' => 'required|string|max:255',
-        'deskripsi' => 'required|string',
-        'peraturan' => 'required|string',
-        'telepon' => 'required|string|max:15',
-        'harga' => 'required|numeric',
-        'total_kamar' => 'required|integer',
-    ]);
-
-    $addKost = [
-        'nama' => $validatedData['nama'],
-        'deskripsi' => $validatedData['deskripsi'],
-        'peraturan' => $validatedData['peraturan'],
-        'nama_pemilik' => auth()->user()->name,
-        'nomor_hp' => $validatedData['telepon'],
-        'harga' => $validatedData['harga'],
-        'jumlah_kamar' => $validatedData['total_kamar'],
-    ];
-
-    Kost::create($addKost);
-    // dd(auth()->user()->username);
-    $request->session()->flash('success', 'Account Created Succesfully');
-    return redirect('/dashboard/owner');
-}
 
 
     public function edit($id)
@@ -78,29 +94,53 @@ class AdminController extends Controller
     // Mengupdate data kost
     public function update(Request $request, $id)
     {
-
-        $kost = Kost::find($id);
-        $kost->nama = $request->nama;
-        $kost->deskripsi = $request->deskripsi;
-        $kost->peraturan = $request->peraturan;
-        $kost->nama_pemilik = $request->nama_pemilik;
-        $kost->nomor_hp = $request->telepon;
-        $kost->harga = $request->harga;
-        $kost->jumlah_kamar = $request->total_kamar;
-        $kost->image = $request->image;
-
-        $kost->update(); // Simpan perubahan ke database
-
-        return redirect('/dashboard/owner')->with('success', 'Data kost berhasil ditambahkan.');
+        // Validasi data input
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'peraturan' => 'required|string',
+            'telepon' => 'required|string|max:15',
+            'harga' => 'required|numeric',
+            'total_kamar' => 'required|integer',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk multiple images
+        ]);
+    
+        // Temukan data kost berdasarkan ID
+        $kost = Kost::findOrFail($id);
+    
+        // Update data kost
+        $kost->nama = $validatedData['nama'];
+        $kost->deskripsi = $validatedData['deskripsi'];
+        $kost->peraturan = $validatedData['peraturan'];
+        $kost->nama_pemilik = $validatedData['nama_pemilik'] ?? auth()->user()->name;
+        $kost->nomor_hp = $validatedData['telepon'];
+        $kost->harga = $validatedData['harga'];
+        $kost->jumlah_kamar = $validatedData['total_kamar'];
+        $kost->save(); // Simpan perubahan kost terlebih dahulu
+    
+        // Cek apakah ada file gambar baru yang diunggah
+        if ($request->hasFile('images')) {
+            // Opsional: Menghapus gambar lama yang terkait dengan kost
+            $kost->images()->delete();
+    
+            // Simpan setiap gambar baru
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('uploads/kost', 'public');
+    
+                // Simpan data gambar ke dalam tabel kost_images
+                $kost->images()->create([
+                    'file_name' => $image->getClientOriginalName(),
+                    'file_path' => $path,
+                ]);
+            }
+        }
+    
+        // Redirect kembali ke halaman dashboard dengan pesan sukses
+        return redirect('/dashboard/owner')->with('success', 'Data kost berhasil diperbarui.');
     }
 
-    
-    
 
     function logout(){
         return('logout');
     }
-
-
-
 }

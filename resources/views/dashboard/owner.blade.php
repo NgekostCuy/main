@@ -18,6 +18,15 @@
         </ul>
     </aside>
     <div class="bg-gray-50 ">
+
+        @if(session()->has('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 my-1 px-3 py-2 rounded relative text-sm" role="alert">
+                <div>
+                    {{ session('success') }}
+                </div>
+            </div>
+            @endif
+
         <div class="py-8 px-10">
             <div class="flex border-b mb-8">
                 <div class="mr-28 pb-9">
@@ -31,7 +40,7 @@
                     <Button class=" border-teal-600 text-teal-600 rounded border-2 py-2 px-14">Chat CS</Button>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {{-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach ($kosti as $kost) <!-- Looping untuk setiap kost -->
                 <div class="flex justify-between flex-col bg-gray-50/5 shadow-lg border rounded-md p-4">
                     <div class="flex gap-5 mb-4">
@@ -54,7 +63,37 @@
                     </div>
                 </div>
                 @endforeach
+            </div> --}}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                @foreach ($kosti as $kost) <!-- Looping untuk setiap kost -->
+                <div class="flex justify-between flex-col bg-gray-50/5 shadow-lg border rounded-md p-4">
+                    <div class="flex gap-5 mb-4">
+                        <div class="basis-2/3 ">
+                            <p class="text-teal-600 font-semibold mb-3">{{ $kost->nama }}</p> <!-- Menampilkan nama kost -->
+                            <p class="font-semibold mb-2">{{ $kost->deskripsi }}</p> <!-- Menampilkan deskripsi kost -->
+                            <p class="text-xs">{{ $kost->alamat }}</p> <!-- Jika ada kolom alamat, sesuaikan nama kolomnya -->
+                        </div>
+                        <div class="">
+                            @if ($kost->images->isNotEmpty())
+                                <img src="{{ asset('storage/' . $kost->images->first()->file_path) }}" class="object-cover h-24 md:h-full" alt="{{ $kost->nama }}">
+                            @else
+                                <img src="{{ asset('public/img/default.jpg') }}" class="object-cover h-24 md:h-16" alt="Default Image"> <!-- Gambar default jika tidak ada -->
+                            @endif
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <form id="deleteForm" action="{{ route('kost.destroy', $kost->id) }}" method="POST" class="flex-1">
+                            @csrf
+                            @method('DELETE') <!-- Metode DELETE untuk menghapus -->
+                            <button type="button" onclick="openModal()" class="w-full bg-red-600 hover:bg-red-700 text-white rounded py-2 transition duration-150 ease-in-out">Hapus Kost</button>
+                        </form>
+                        <a href="{{ url('/edit_kost/' . $kost->id) }}" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white rounded py-2 text-center transition duration-150 ease-in-out">Edit Kost</a>
+                    </div>
+                </div>
+                @endforeach
             </div>
+            
 
             <div id="confirmationModal" class="fixed inset-0 flex items-center justify-center z-50 hidden bg-gray-800 bg-opacity-50">
                 <div class="bg-white rounded-lg p-6 w-1/3">
@@ -65,8 +104,7 @@
                         <button onclick="document.getElementById('deleteForm').submit();" class="bg-red-600 hover:bg-red-700 text-white rounded py-1 px-3">Hapus</button>
                     </div>
                 </div>
-            </div>
-            
+            </div> 
         </div>
     </div>    
     </main>
