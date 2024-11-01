@@ -22,7 +22,7 @@
             <div class="flex border-b mb-8">
                 <div class="mr-28 pb-9">
                     <p class="mb-5 font-medium">Data Kost</p>
-                    <Button class="text-sm border-teal-600 bg-teal-600 text-white border-2 rounded py-1.5 px-8">Tambah Data Kost</Button>
+                    <a href="{{ route('dashboard.tambahKostStep1') }}" class="text-sm border-teal-600 bg-teal-600 text-white border-2 rounded py-1.5 px-8">Tambah Data Kost</a>
                 </div>
                 <div class=" pl-8 border-l pb-9">
                     <p class="mb-5 font-medium">Pusat Bantuan</p>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function(){
@@ -21,6 +22,18 @@ Route::middleware(['guest'])->group(function(){
     Route::post('/register', [RegisterController::class, 'store']);
 });
 
+Route::get('/', function ()  {
+    return redirect('index');
+});
+
+Route::get('/dashboard', [DashboardController::class, 'owner']) -> name('dashboard.owners');
+Route::get('/dashboard/tambah-kost-step-1', [DashboardController::class, 'tambahKostStep1']) -> name('dashboard.tambahKostStep1');
+Route::post('/dashboard/submit-kost-step-1', [DashboardController::class, 'submitStep1']) -> name('dashboard.submitStep1');
+
+Route::get('/dashboard/tambah-kost-step-2', [DashboardController::class, 'tambahKostStep2']) -> name('dashboard.tambahKostStep2');
+Route::post('/dashboard/submit-kost-step-2', [DashboardController::class, 'submitStep2']) -> name('dashboard.submitStep2');
+
+
 Route::get('/home', function ()  {
     return redirect('dashboard');
 });
@@ -34,7 +47,7 @@ Route::get('/detail', [LoginController::class, 'detail'])->name('detail');
 Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard',[AdminController::class, 'index']);
     Route::get('/dashboard/admin',[AdminController::class, 'admin'])->middleware('UserAkses:admin');
-    Route::get('/dashboard/owner',[AdminController::class, 'owner'])->name('owner');
+    Route::get('/dashboard/owner',[AdminController::class, 'owner'])->middleware('UserAkses:owner')->name('owner');
     Route::get('/dashboard/user',[AdminController::class, 'user'])->middleware('UserAkses:user');
 
     // redirect ke halaman home

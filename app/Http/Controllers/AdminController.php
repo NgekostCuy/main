@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\data_kost;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +32,9 @@ class AdminController extends Controller
         // echo "<h1>".Auth::user()->name."</h1>";
         // echo "<h1>owner</h1>";
         // echo "<a href='/logout'>Logout</a>";
+        
+        // $kost = data_kost::get();
+        // dd($kost);
           return view('dashboard.owner');
     }
 
