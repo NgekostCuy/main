@@ -49,17 +49,20 @@
             </div>  
             <div>
                 <label for="total_kamar" class="block mb-2 text-sm font-medium text-gray-900">Jumlah Kamar</label>
-                <input type="number" id="total_kamar" name="total_kamar" value="{{ $kost->jumlah_kamar }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                <input type="number" id="total _kamar" name="total_kamar" value="{{ $kost->total_kamar }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
             </div>
         </div>
+        
         <div class="mb-6">
             <label for="image" class="block mb-2 text-sm font-medium text-gray-900">Upload Gambar (Kosongkan jika tidak ingin mengubah)</label>
+            @if($kost->image)
+                <img src="{{ asset('path/to/images/' . $kost->image) }}" alt="Gambar Kost" class="mb-2 w-32 h-32 object-cover">
+            @endif
             <input type="file" id="image" name="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
-        </div> 
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Update</button>
-    </form>
-    
+        </div>
 
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Simpan Perubahan</button>
+    </form>
     </main>
 </body>
 </html>

@@ -46,20 +46,20 @@ class LoginController extends Controller
 
         if(Auth::attempt($infologin)){
             if(Auth::user()->role == 'admin'){
-                return redirect('/dashboard/admin');
+                return redirect('/dashboard/admin')-> with('success', 'Halo Admin');;
             }else if(Auth::user()->role == 'user'){
                 return redirect('/dashboard/user');
             }else if(Auth::user()->role == 'owner'){
-                return redirect('/dashboard/owner');
+                return redirect('/dashboard/owner')-> with('success', 'Halo Owner');
             }
         }else{
-            return redirect('')->withErrors('Login Gagal, Harap periksa kembali email dan password anda')->withInput();
+            return redirect('/login')->withErrors('Login Gagal, Harap periksa kembali email dan password anda')->withInput();
         }
     }
 
     function logout() {
         Auth::logout();
-        return redirect('');
+        return redirect('/login');
     }
 
     function forgot_password() {

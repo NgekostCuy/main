@@ -30,6 +30,6 @@ class RegisterController extends Controller
 
         $request->session()->flash('success', 'Account Created Succesfully');
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

@@ -7,6 +7,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Dashboard Owner</title>
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <style>
+        .container {
+            width: 300px; /* Ganti dengan lebar kontainer yang diinginkan */
+            height: 200px; /* Ganti dengan tinggi kontainer yang diinginkan */
+            border: 1px solid #000; /* Untuk melihat batas kontainer */
+            overflow: hidden; /* Menyembunyikan bagian gambar yang keluar dari kontainer */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover; /* Menjaga rasio aspek gambar */
+        }
+    </style>
 </head>
 <body>
     <header class="py-5"><span class=" text-teal-600 font-bold text-2xl ml-10 my-10">KostCuy</span> </header>
@@ -76,7 +94,11 @@
                         </div>
                         <div class="">
                             @if ($kost->images->isNotEmpty())
-                                <img src="{{ asset('storage/' . $kost->images->first()->file_path) }}" class="object-cover h-24 md:h-full" alt="{{ $kost->nama }}">
+                                {{-- Mengambil gambar terbaru berdasarkan waktu upload --}}
+                                @php
+                                    $latestImage = $kost->images->sortByDesc('created_at')->first();
+                                @endphp
+                                <img src="{{ asset('storage/' . $latestImage->file_path) }}" class="object-cover h-24 md:h-full" alt="{{ $kost->nama }}">
                             @else
                                 <img src="{{ asset('public/img/default.jpg') }}" class="object-cover h-24 md:h-16" alt="Default Image"> <!-- Gambar default jika tidak ada -->
                             @endif

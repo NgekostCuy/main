@@ -14,7 +14,8 @@ class AdminController extends Controller
     }
     
     function admin() {
-        return view('dashboard.admin');
+        $kosti = Kost::all();
+        return view('dashboard.admin', compact('kosti'));
     }
     
     function user() {
@@ -25,7 +26,6 @@ class AdminController extends Controller
         $username = auth()->user()->name;
         // Mengambil data kost yang dimiliki oleh user dengan username tersebut
         $kosti = Kost::where('nama_pemilik', $username)->get();
-    
         return view('dashboard.owner', compact('kosti'));
     }
 
@@ -118,23 +118,24 @@ class AdminController extends Controller
         $kost->jumlah_kamar = $validatedData['total_kamar'];
         $kost->save(); // Simpan perubahan kost terlebih dahulu
     
-        // Cek apakah ada file gambar baru yang diunggah
         if ($request->hasFile('images')) {
-            // Opsional: Menghapus gambar lama yang terkait dengan kost
-            $kost->images()->delete();
-    
-            // Simpan setiap gambar baru
             foreach ($request->file('images') as $image) {
-                $path = $image->store('uploads/kost', 'public');
-    
-                // Simpan data gambar ke dalam tabel kost_images
-                $kost->images()->create([
-                    'file_name' => $image->getClientOriginalName(),
-                    'file_path' => $path,
-                ]);
+                $path = $image->store('images', 'public');
+        
+                // Cek apakah penyimpanan gambar berhasil
+                if ($path) {
+                    // Simpan data gambar ke dalam tabel kost_images
+                    $kost->images()->create([
+                        'file_name' => $image->getClientOriginalName(),
+                        'file_path' => $path,
+                    ]);
+                } else {
+                    // Log atau tangani kesalahan jika penyimpanan gagal
+                    \Log::error('Gambar gagal disimpan: ' . $image->getClientOriginalName());
+                }
             }
         }
-    
+
         // Redirect kembali ke halaman dashboard dengan pesan sukses
         return redirect('/dashboard/owner')->with('success', 'Data kost berhasil diperbarui.');
     }
