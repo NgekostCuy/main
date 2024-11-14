@@ -8,6 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    
     <title>Detail</title>
 </head>
 <body>
@@ -159,7 +168,7 @@
                         Lokasi
                     </h2>
 
-                    <div class="mapswrapper"><iframe width="600" height="450" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=New%20York&zoom=10&maptype=roadmap"></iframe><a href="https://taxinstructions.net/form-1040-es/">Form 1040-ES</a><style>.mapswrapper{background:#fff;position:relative}.mapswrapper iframe{border:0;position:relative;z-index:2}.mapswrapper a{color:rgba(0,0,0,0);position:absolute;left:0;top:0;z-index:0}</style></div>
+                    <div id="map" style="width:600px; height: 400px"></div>
                 </div>
             </div>
         </div>
@@ -218,6 +227,47 @@
             const menu = document.getElementById('menu');
             menu.classList.toggle('hidden');
         });
+
+        // Get the latitude and longitude from your PHP backend (or set them manually for testing)
+var latitude = parseFloat("{{ $kost->latitude ?? '0.0' }}");  // Use server-side data or default to '0.0' if not available
+var longitude = parseFloat("{{ $kost->longitude ?? '0.0' }}");
+
+// Initialize the map with the provided latitude and longitude
+var map = L.map('map').setView([latitude, longitude], 12);  // Use provided latitude, longitude, and zoom level
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 100,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+// Automatically place a marker at the given coordinates
+var marker = L.marker([latitude, longitude]).addTo(map);
+
+// Function to update coordinates display and hidden input fields
+function updateCoordinates(lat, lng) {
+    document.getElementById('coords').innerText = lat.toFixed(5) + ', ' + lng.toFixed(5);  // Show coordinates on the page
+    document.getElementById('latitude').value = lat;  // Set hidden latitude input
+    document.getElementById('longitude').value = lng;  // Set hidden longitude input
+}
+
+// Initially update the coordinates on page load
+updateCoordinates(latitude, longitude);
+
+// Optionally, add event listener to update coordinates when marker is dragged
+marker.on('dragend', function(event) {
+    var position = marker.getLatLng();
+    updateCoordinates(position.lat, position.lng);  // Update coordinates on drag
+});
+
+// Delete the marker when the delete button is clicked
+document.getElementById('deleteButton').addEventListener('click', function() {
+    map.removeLayer(marker);  // Remove the marker
+    marker = null;  // Reset the marker
+    document.getElementById('coords').innerText = 'N/A';  // Reset coordinates display
+    document.getElementById('latitude').value = '';  // Clear latitude value
+    document.getElementById('longitude').value = '';  // Clear longitude value
+});
+
     </script>
 </body> 
 </script>

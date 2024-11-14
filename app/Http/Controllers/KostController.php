@@ -18,7 +18,4 @@ class KostController extends Controller
         return view('detail', compact('kost'));
     }
 
-    public function search(Request $request){
-        
-    }
 }

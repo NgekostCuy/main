@@ -18,7 +18,9 @@ class Kost extends Model
         'no_telepon',
         'harga',
         'jumlah_kamar',
-        'cover'
+        'cover',
+        'latitude',
+        'longitude'
     ];
 
     public function images()

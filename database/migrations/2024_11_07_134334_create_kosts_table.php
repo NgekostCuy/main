@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer("harga");
             $table->integer("jumlah_kamar");
             $table->text("cover");
+            $table->decimal("latitude", 10, 7); 
+            $table->decimal("longitude", 10, 7); 
             $table->timestamps();
         });
     }

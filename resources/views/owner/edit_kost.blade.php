@@ -95,81 +95,67 @@
 
 <script>
     function previewImages() {
-        const input = document.getElementById('images');
-        const preview = document.getElementById('images-preview');
-        const files = input.files;
-
-        // Cek apakah ada file yang dipilih
-        if (files.length === 0) {
-            preview.innerHTML = "<p class='text-red-500'>No images selected for preview</p>";
-            return;
-        }
-
-        // Loop melalui setiap file yang diunggah
-        Array.from(files).forEach((file, index) => {
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    // Buat container div untuk gambar dan tombol hapus
-                    const imageContainer = document.createElement("div");
-                    imageContainer.classList.add("relative", "mb-2");
-
-                    // Buat elemen img baru dan atur src-nya dengan data gambar
-                    const img = document.createElement("img");
-                    img.src = e.target.result;
-                    img.classList.add("object-cover", "h-24", "w-full", "rounded-lg"); // Styling menggunakan Tailwind
-                    
-                    // Buat tombol hapus
-                    const deleteButton = document.createElement("button");
-                    deleteButton.innerText = "Hapus";
-                    deleteButton.classList.add("absolute", "top-1", "right-1", "bg-red-500", "text-white", "rounded-full", "px-2", "py-1", "text-xs");
-                    deleteButton.onclick = () => removeImage(index); // Panggil fungsi removeImage dengan index gambar
-                    
-                    // Tambahkan gambar dan tombol hapus ke dalam container
-                    imageContainer.appendChild(img);
-                    imageContainer.appendChild(deleteButton);
-
-                    // Tambahkan container ke elemen preview
-                    preview.appendChild(imageContainer);
-                };
-
-                reader.readAsDataURL(file); // Membaca file sebagai URL data
-            }
-        });
-    }
-
-    // Fungsi untuk menghapus gambar yang dipilih
-    function removeImage(index) {
-        const input = document.getElementById('images');
-        const dataTransfer = new DataTransfer();
-
-        // Buat ulang file list tanpa file yang dihapus
-        const files = Array.from(input.files).filter((_, i) => i !== index);
-        files.forEach(file => dataTransfer.items.add(file));
-
-        // Perbarui file input dengan file list yang baru
-        input.files = dataTransfer.files;
-
-        // Perbarui pratinjau gambar setelah penghapusan
-        previewImages();
-    }
-
-    // Fungsi untuk menghapus gambar lama yang ditampilkan
-    function deleteOldImage(imageId) {
-    const imageContainer = document.getElementById('image-' + imageId);
-
-    // Sembunyikan gambar alih-alih menghapusnya
-    imageContainer.style.display = 'none';
-
-
-    fetch(`/delete-image/${imageId}`, {
-        method: 'DELETE',
-    }).then(response => response.json())
-      .then(data => {
-          console.log(data.message);
-      });
-}
+         const input = document.getElementById('images');
+         const preview = document.getElementById('preview');
+         preview.innerHTML = ""; // Reset tampilan sebelumnya
+ 
+         const files = input.files;
+ 
+         // Cek apakah ada file yang dipilih
+         if (files.length === 0) {
+             preview.innerHTML = "<p class='text-red-500'>No images selected for preview</p>";
+             return;
+         }
+ 
+         // Loop melalui setiap file yang diunggah
+         Array.from(files).forEach((file, index) => {
+             if (file && file.type.startsWith('image/')) {
+                 const reader = new FileReader();
+ 
+                 reader.onload = function(e) {
+                     // Buat container div untuk gambar dan tombol hapus
+                     const imageContainer = document.createElement("div");
+                     imageContainer.classList.add("relative", "mb-2");
+ 
+                     // Buat elemen img baru dan atur src-nya dengan data gambar
+                     const img = document.createElement("img");
+                     img.src = e.target.result;
+                     img.classList.add("object-cover", "h-24", "w-full", "rounded-lg"); // Styling menggunakan Tailwind
+                     
+                     // Buat tombol hapus
+                     const deleteButton = document.createElement("button");
+                     deleteButton.innerText = "Hapus";
+                     deleteButton.classList.add("absolute", "top-1", "right-1", "bg-red-500", "text-white", "rounded-full", "px-2", "py-1", "text-xs");
+                     deleteButton.onclick = () => removeImage(index); // Panggil fungsi removeImage dengan index gambar
+                     
+                     // Tambahkan gambar dan tombol hapus ke dalam container
+                     imageContainer.appendChild(img);
+                     imageContainer.appendChild(deleteButton);
+ 
+                     // Tambahkan container ke elemen preview
+                     preview.appendChild(imageContainer);
+                 };
+ 
+                 reader.readAsDataURL(file); // Membaca file sebagai URL data
+             }
+         });
+     }
+ 
+     // Fungsi untuk menghapus gambar yang dipilih
+     function removeImage(index) {
+         const input = document.getElementById('images');
+         const dataTransfer = new DataTransfer();
+ 
+         // Buat ulang file list tanpa file yang dihapus
+         const files = Array.from(input.files).filter((_, i) => i !== index);
+         files.forEach(file => dataTransfer.items.add(file));
+ 
+         // Perbarui file input dengan file list yang baru
+         input.files = dataTransfer.files;
+ 
+         // Perbarui pratinjau gambar setelah penghapusan
+         previewImages();
+     }
 </script>
 
 

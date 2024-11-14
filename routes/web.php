@@ -66,5 +66,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/favorite', [LoginController::class, 'favorite'])->name('favorite');
 
     Route::get('/search', [SearchController::class, 'index']);
+
 });
 

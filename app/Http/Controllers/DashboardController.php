@@ -46,7 +46,9 @@ class DashboardController extends Controller
             "no_telepon" => $request->no_telepon,
             "harga" => $request->harga,
             "jumlah_kamar" => $request->jumlah_kamar,
-            "cover" => $request->hasFile("cover")
+            "cover" => $request->hasFile("cover"),
+            "latitude" => $request->latitude,
+            "longitude" => $request->longitude,
         ]);
 
         // Menangani upload cover image

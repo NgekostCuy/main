@@ -6,10 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Owner</title>
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <style>
+        #map { 
+            height: 400px;
+            display: flex;
+            justify-content: start;
+            align-items: flex-end
+         }
+        #coordinates { 
+            background-color: white; 
+            padding: 8px; 
+            z-index: 1000; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            display: flex;
+            align-items: center;
+        }
+        #saveButton, #deleteButton {
+            z-index: 1000;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 10px;
+        }
+        #saveButton:hover, #deleteButton:hover {
+            background-color: #45a049;
+        }
+        </style>
 </head>
 <body>
-    <header class="py-5"><span class=" text-teal-600 font-bold text-2xl ml-10 my-10">KostCuy</span> </header>
+    <header class="py-5"><span class=" text-teal-600 font-bold text-2xl ml-10 my-10">
+        KostCuy</span> 
+    </header>
     <main class="flex">
     <aside class="pt-4">
         <ul>
@@ -72,12 +112,133 @@
             <!-- Tempat untuk menampilkan preview gambar -->
             <div id="preview" class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"></div>
         </div> 
+
+        <div id="map">
+            <div id="coordinates">Coordinates: 
+                <span id="coords" value=''>N/A</span>
+                <button id="saveButton">Save Coordinates</button>
+                <button id="deleteButton">Delete Marker</button>
+
+                <input type="text" id="latitude" name="latitude" >
+                <input type="text" id="longitude" name="longitude" >
+            </div>
+        </div>
+        
+
         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>        
     </form>
     </main>
 </body>
 
+
+
 <script>
+   
+   var map = L.map('map').setView([0.5, 101.5], 12); // Initial map view
+
+// Tile layer from OpenStreetMap
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 100,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+var marker = null; // Variable to store the marker
+
+// Function to update coordinates in the display and hidden input
+function updateCoordinates(lat, lng) {
+    // Update the display
+    document.getElementById('coords').innerText = lat.toFixed(5) + ', ' + lng.toFixed(5);
+
+    // Update hidden input values
+    document.getElementById('latitude').value = lat.toFixed(5);
+    document.getElementById('longitude').value = lng.toFixed(5);
+}
+
+// Function to add a marker
+function addMarker(lat, lng) {
+    // Remove existing marker if any
+    if (marker) {
+        map.removeLayer(marker);
+    }
+
+    // Create new marker and add it to the map
+    marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+    // Update coordinates in the display and hidden inputs
+    updateCoordinates(lat, lng);
+
+    // Handle marker click to update coordinates
+    marker.on('click', function() {
+        updateCoordinates(lat, lng);
+    });
+
+    // Handle marker drag event to update coordinates
+    marker.on('dragend', function(event) {
+        var position = marker.getLatLng();
+        updateCoordinates(position.lat, position.lng);
+    });
+}
+
+// Add a marker when the map is clicked
+map.on('click', function(e) {
+    addMarker(e.latlng.lat, e.latlng.lng);
+});
+
+// Save button event to send coordinates to the server
+document.getElementById('saveButton').addEventListener('click', function() {
+    var lat = document.getElementById('latitude').value;
+    var lng = document.getElementById('longitude').value;
+
+    if (lat && lng) {
+        // Send the coordinates to the server (via AJAX or form submission)
+        fetch('/kosts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                nama_kost: "Sample Kost Name",  // Replace with actual form data
+                deskripsi_kost: "Sample Description",  // Replace with actual form data
+                peraturan_kost: "Sample Rules",  // Replace with actual form data
+                fasilitas_kost: "Sample Facilities",  // Replace with actual form data
+                nama_pemilik: "Sample Owner",  // Replace with actual form data
+                no_telepon: "1234567890",  // Replace with actual form data
+                harga: 1000000,  // Replace with actual form data
+                jumlah_kamar: 10,  // Replace with actual form data
+                cover: "sample-cover.jpg",  // Replace with actual form data
+                latitude: lat,  // Send the latitude
+                longitude: lng,  // Send the longitude
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Coordinates saved successfully!");
+            } else {
+                alert("There was an error saving the coordinates.");
+            }
+        })
+        .catch(error => {
+            console.error("Error saving coordinates:", error);
+            alert("Error saving coordinates.");
+        });
+    } else {
+        alert("No coordinates set. Please add a marker.");
+    }
+});
+
+// Delete marker button event
+document.getElementById('deleteButton').addEventListener('click', function() {
+    if (marker) {
+        map.removeLayer(marker);
+        marker = null;
+        document.getElementById('latitude').value = '';
+        document.getElementById('longitude').value = '';
+        document.getElementById('coords').innerText = 'N/A';
+    }
+});
+
     function previewImages() {
          const input = document.getElementById('images');
          const preview = document.getElementById('preview');
