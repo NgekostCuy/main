@@ -10,7 +10,15 @@ class KostController extends Controller
     public function index()
     {
         $kosts = Kost::all();
-        // Menampilkan data yang diambil dari database untuk pengecekan
         return view('index', compact('kosts'));
+    }
+    public function detail($id)
+    {
+        $kost = Kost::findOrFail($id);
+        return view('detail', compact('kost'));
+    }
+
+    public function search(Request $request){
+        
     }
 }

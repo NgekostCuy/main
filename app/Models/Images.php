@@ -1,22 +1,19 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KostImage extends Model
+class Images extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'kost_id',
-        'file_name',
-        'file_path',
+        'image',
+        'kost_id'
     ];
 
-    public function kost()
-    {
+    public function kosts(){
         return $this->belongsTo(Kost::class);
     }
 }

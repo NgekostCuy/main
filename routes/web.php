@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\KostController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function(){
@@ -34,33 +35,36 @@ Route::get('/favorit', function ()  {
 
 Route::get('/', [KostController::class, 'index']);
 
-Route::get('/detail', [LoginController::class, 'detail'])->name('detail');
+Route::get('/detail/{id}', [KostController::class, 'detail'])->name('detail');
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/dashboard',[AdminController::class, 'index']);
-    Route::get('/dashboard/admin',[AdminController::class, 'admin'])->middleware('UserAkses:admin');
-    // Route::get('/create', [AdminController::class, 'show'])
-    Route::get('/dashboard/owner', [AdminController::class, 'owner'])->name('dashboard.owner')->middleware('UserAkses:owner');
+    Route::get('/dashboard',[DashboardController::class, 'index']);
+    Route::get('/dashboard/admin',[DashboardController::class, 'admin'])->middleware('UserAkses:admin');
+    // Route::get('/create', [DashboardController::class, 'show'])
+    Route::get('/dashboard/owner', [DashboardController::class, 'owner'])->name('dashboard.owner')->middleware('UserAkses:owner');
 
-    Route::get('/dashboard/user',[AdminController::class, 'user'])->middleware('UserAkses:user');
+    Route::get('/dashboard/user',[DashboardController::class, 'user'])->middleware('UserAkses:user');
 
-    Route::get('/add_kost',[AdminController::class, 'add_kost'])->middleware('UserAkses:owner');
-    Route::post('/submit', [AdminController::class, 'submit_kost'])->middleware('UserAkses:owner');
-    Route::delete('/kost/{id}', [AdminController::class, 'destroy'])->name('kost.destroy');
+    Route::get('/add_kost',[DashboardController::class, 'add_kost'])->middleware('UserAkses:owner');
+    Route::post('/store', [DashboardController::class, 'store'])->middleware('UserAkses:owner');
+    Route::delete('/kost/{id}', [DashboardController::class, 'destroy'])->name('kost.destroy');
 
-    // Rute untuk menampilkan form edit
-    Route::get('/edit_kost/{id}', [AdminController::class, 'edit'])->name('kost.edit');
+    Route::get('/edit/{id}', [DashboardController::class, 'edit'])->name('kost.edit');
+
+    Route::post('/kost/{id}', [DashboardController::class, 'update'])->name('kost.update');
 
     // Rute untuk menyimpan data kost setelah di-edit
-    Route::post('/kost/{id}', [AdminController::class, 'update'])->name('kost.update')->middleware('auth');
+    Route::post('/kost/{id}', [DashboardController::class, 'update'])->name('kost.update')->middleware('auth');
 
     // Rute untuk menghapus kost
-    Route::delete('/kost/{id}', [AdminController::class, 'destroy'])->name('kost.destroy');
+    Route::delete('/kost/{id}', [DashboardController::class, 'destroy'])->name('kost.destroy');
 
     // redirect ke halaman home
     Route::get('/home', [LoginController::class, 'home'])->name('home');
     Route::get('/logout',[LoginController::class, 'logout']);        
-    Route::get('/detail', [LoginController::class, 'detail'])->name('detail');
+    Route::get('/detail/{id}', [KostController::class, 'detail'])->name('detail');
     Route::get('/favorite', [LoginController::class, 'favorite'])->name('favorite');
+
+    Route::get('/search', [SearchController::class, 'index']);
 });
 

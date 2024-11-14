@@ -110,54 +110,7 @@
     
 </head>
 <body>
-    <header class='border-b bg-white font-sans min-h-[60px] px-4 py-3 mx-5 relative tracking-wide z-50'>
-        <div class='flex flex-wrap items-center max-lg:gap-y-6'>
-            <a href='/' class='hover:text-[#007bff] text-sm md:text-xl text-teal-600 block font-extrabold'>NgekostCuy</a>
-            
-            <div class="flex-grow flex justify-center items-center max-lg:flex-col">
-                <div class="flex items-center hidden md:flex">
-                    <input type="text" placeholder="Search..." class="border rounded-md px-4 py-2 w-full max-w-[250px]" />
-                    <button class="ml-2 bg-teal-600 text-white px-4 py-2 rounded-md">Search</button>
-                </div>
-            </div>
-
-            <button id="hamburger" class="lg:hidden flex items-center p-2 ml-auto">
-                <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
-
-            <div id="menu" class='hidden lg:flex lg:items-center md:justify-center ml-auto space-x-4'>
-                <ul class='lg:flex lg:gap-x-10 max-lg:flex-col max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-2/3 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:px-10 max-lg:py-4 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50'>
-                    <li class='mb-6 hidden max-lg:block md:text-center'>
-                        <a href='/index.html' class='hover:text-[#007bff] text-[15px] text-teal-600 block font-extrabold text-lg'>NgekostCuy</a>
-                    </li>
-                    <li class='max-lg:border-b max-lg:py-3 flex items-center justify-center'>
-                        <a href='dashboard/owner' class='hover:text-[#007bff] text-[15px] text-gray-700 block font-bold'>Promosikan Kosmu Disini</a>
-                    </li>
-                    <li class='max-lg:border-b max-lg:py-3 flex items-center justify-center'>
-                        <a href='favorit' class='hover:text-[#007bff] text-[15px] text-gray-700 block font-bold'>Favorit</a>
-                    </li>
-                    @auth
-                        <li class='max-lg:border-b max-lg:py-3 flex justify-center'>
-                            <button class="bg-teal-600 px-5 py-2 rounded">
-                                <a href='logout' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Logout</a>
-                            </button>
-                            {{-- <p>{{ Auth::user()->name }}</p> --}}
-                        </li>
-
-                    @endauth
-                    @guest     
-                    <li class='max-lg:border-b max-lg:py-3 flex justify-center'>
-                        <button class="bg-teal-600 px-5 py-2 rounded">
-                            <a href='login' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Login</a>
-                        </button>
-                    </li>
-                    @endguest
-                </ul>
-            </div>
-        </div>
-    </header>
+    <x-header_main />
     
     <section class="m-10 flex items-center py-20 relative">
         <div class="z-10 w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 relative">
@@ -228,160 +181,22 @@
         </div>        
     </section>    
 
-    {{-- <section class="rekomendasi m-5">
-        <h2 class="font-medium text-xl mb-5">Rekomendasi Kost</h2>
-        <div class="overflow-x-auto">
-            <div class="flex gap-5">
-                <div class="w-full max-w-xs md:max-w-sm bg-white border border-gray-200 rounded-lg shadow inline-block">
-                    <a href="detail">
-                        <img class="p-2 rounded-t-xl" src="img/room-1.jpg" alt="product image" />
-                    </a>
-                    <div class="px-5 pb-5">
-                        <div class="flex items-center mt-2.5 mb-5">
-                            <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 rounded">Putra</span>
-                            <span class="ml-auto text-blue-800 text-md font-semibold">5.0</span>
-                        </div>
-                        <a href="detail.html">
-                            <h5 class="text-xl font-medium tracking-tight text-gray-900">Kost Anggun Citra Elok Nirwana Residence</h5>
-                        </a>
-                        <div class="flex items-center justify-between">
-                            <span class="text-md font-semibold text-gray-900">Rp.750.000 (perbulan)</span>
-                        </div>
-                        <div class="flex items-center mt-3">
-                            <span class="flex items-center mx-2">
-                                <i class="fas fa-car text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fas fa-wifi text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fa-solid fa-toilet text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fa-solid fa-shower text-gray-600 mr-1"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Repeat for additional cards -->
-                <div class="w-full max-w-xs md:max-w-sm bg-white border border-gray-200 rounded-lg shadow inline-block">
-                    <a href="detail.html">
-                        <img class="p-2 rounded-t-xl" src="img/room-2.jpg" alt="product image" />
-                    </a>
-                    <div class="px-5 pb-5">
-                        <div class="flex items-center mt-2.5 mb-5">
-                            <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 rounded">Putra</span>
-                            <span class="ml-auto text-blue-800 text-md font-semibold">5.0</span>
-                        </div>
-                        <a href="detail.html">
-                            <h5 class="text-xl font-medium tracking-tight text-gray-900">Kost Harmoni Indah Sejahtera Residence</h5>
-                        </a>
-                        <div class="flex items-center justify-between">
-                            <span class="text-md font-semibold text-gray-900">Rp.750.000 (perbulan)</span>
-                        </div>
-                        <div class="flex items-center mt-3">
-                            <span class="flex items-center mx-2">
-                                <i class="fas fa-car text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fas fa-wifi text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fa-solid fa-toilet text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fa-solid fa-shower text-gray-600 mr-1"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full max-w-xs md:max-w-sm bg-white border border-gray-200 rounded-lg shadow inline-block">
-                    <a href="detail.html">
-                        <img class="p-2 rounded-t-xl" src="img/room-3.jpg" alt="product image" />
-                    </a>
-                    <div class="px-5 pb-5">
-                        <div class="flex items-center mt-2.5 mb-5">
-                            <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 rounded">Putra</span>
-                            <span class="ml-auto text-blue-800 text-md font-semibold">5.0</span>
-                        </div>
-                        <a href="detail.html">
-                            <h5 class="text-xl font-medium tracking-tight text-gray-900">Kost Griya Sakinah Asri Taman Surya</h5>
-                        </a>
-                        <div class="flex items-center justify-between">
-                            <span class="text-md font-semibold text-gray-900">Rp.750.000 (perbulan)</span>
-                        </div>
-                        <div class="flex items-center mt-3">
-                            <span class="flex items-center mx-2">
-                                <i class="fas fa-car text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fas fa-wifi text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fa-solid fa-toilet text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fa-solid fa-shower text-gray-600 mr-1"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full max-w-xs md:max-w-sm bg-white border border-gray-200 rounded-lg shadow inline-block">
-                    <a href="detail.html">
-                        <img class="p-2 rounded-t-xl" src="img/room-4.jpg" alt="product image" />
-                    </a>
-                    <div class="px-5 pb-5">
-                        <div class="flex items-center mt-2.5 mb-5">
-                            <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 rounded">Putra</span>
-                            <span class="ml-auto text-blue-800 text-md font-semibold">5.0</span>
-                        </div>
-                        <a href="detail.html">
-                            <h5 class="text-xl font-medium tracking-tight text-gray-900">Kost Mentari Ceria Purnama Permata</h5>
-                        </a>
-                        <div class="flex items-center justify-between">
-                            <span class="text-md font-semibold text-gray-900">Rp.750.000 (perbulan)</span>
-                        </div>
-                        <div class="flex items-center mt-3">
-                            <span class="flex items-center mx-2">
-                                <i class="fas fa-car text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fas fa-wifi text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fa-solid fa-toilet text-gray-600 mr-1"></i>
-                            </span>
-                            <span class="flex items-center mx-2">
-                                <i class="fa-solid fa-shower text-gray-600 mr-1"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-
     <section class="rekomendasi m-5">
         <h2 class="font-medium text-xl mb-5">Rekomendasi Kost</h2>
         <div class="overflow-x-auto">
             <div class="flex gap-5">
                 @php
-                // $kosts = $kosts->sortByDesc('harga');
+                
                 @endphp
                 @foreach($kosts as $kost)
                     <div class="w-full max-w-xs md:max-w-sm bg-white border border-gray-200 rounded-lg shadow inline-block">
                         <a href="{{ url('detail', $kost->id) }}">
-                            {{-- Cek apakah kost memiliki gambar --}}
-                            @if ($kost->images->isNotEmpty())
-                                {{-- Ambil gambar terbaru berdasarkan waktu upload --}}
-                                @php
-                                    $latestImage = $kost->images->sortByDesc('created_at')->first();
-                                @endphp
-                                <img src="{{ asset('storage/' . $latestImage->file_path) }}" class="p-2 rounded-t-xl object-cover h-24 md:h-48" alt="{{ $kost->name }}">
-                            @else
-                                {{-- Gambar default jika tidak ada --}}
-                                <img src="{{ asset('public/img/default.jpg') }}" class="p-2 rounded-t-xl object-cover h-24 md:h-48" alt="Default Image">
+                            @if ($kost->cover)
+                                <img src="{{ asset('images/' . $kost->cover->image) }}" class="object-cover h-24 md:h-full" alt="{{ $kost->nama_kost }}">
+                                @elseif ($kost->images->isNotEmpty())
+                                <img src="{{ asset('images/' . $kost->images->first()->image) }}" class="object-cover h-24 md:h-auto" alt="{{ $kost->nama_kost }}">
+                                @else
+                                <p>No image available</p>
                             @endif
                         </a>
                         <div class="px-5 pb-5">
@@ -390,7 +205,7 @@
                                 <span class="ml-auto text-blue-800 text-md font-semibold">{{ $kost->rating }}</span>
                             </div>
                             <a href="{{ url('detail', $kost->id) }}">
-                                <h5 class="text-xl font-medium tracking-tight text-gray-900">{{ $kost->nama }}</h5>
+                                <h5 class="text-xl font-medium tracking-tight text-gray-900">{{ $kost->nama_kost }}</h5>
                             </a>
                             <div class="flex items-center justify-between">
                                 <span class="text-md font-semibold text-gray-900">Rp.{{ number_format($kost->harga, 0, ',', '.') }} (perbulan)</span>
@@ -429,16 +244,12 @@
                 @foreach($kosts as $kost)
                     <div class="w-full max-w-xs md:max-w-sm bg-white border border-gray-200 rounded-lg shadow inline-block">
                         <a href="{{ url('detail', $kost->id) }}">
-                            {{-- Cek apakah kost memiliki gambar --}}
-                            @if ($kost->images->isNotEmpty())
-                                {{-- Ambil gambar terbaru berdasarkan waktu upload --}}
-                                @php
-                                    $latestImage = $kost->images->sortByDesc('created_at')->first();
-                                @endphp
-                                <img src="{{ asset('storage/' . $latestImage->file_path) }}" class="p-2 rounded-t-xl object-cover h-24 md:h-48" alt="{{ $kost->name }}">
-                            @else
-                                {{-- Gambar default jika tidak ada --}}
-                                <img src="{{ asset('public/img/default.jpg') }}" class="p-2 rounded-t-xl object-cover h-24 md:h-48" alt="Default Image">
+                            @if ($kost->cover)
+                                <img src="{{ asset('images/' . $kost->cover->image) }}" class="object-cover h-24 md:h-full" alt="{{ $kost->nama_kost }}">
+                                @elseif ($kost->images->isNotEmpty())
+                                <img src="{{ asset('images/' . $kost->images->first()->image) }}" class="object-cover h-24 md:h-auto" alt="{{ $kost->nama_kost }}">
+                                @else
+                                <p>No image available</p>
                             @endif
                         </a>
                         <div class="px-5 pb-5">
@@ -447,7 +258,7 @@
                                 <span class="ml-auto text-blue-800 text-md font-semibold">{{ $kost->rating }}</span>
                             </div>
                             <a href="{{ url('detail', $kost->id) }}">
-                                <h5 class="text-xl font-medium tracking-tight text-gray-900">{{ $kost->nama }}</h5>
+                                <h5 class="text-xl font-medium tracking-tight text-gray-900">{{ $kost->nama_kost }}</h5>
                             </a>
                             <div class="flex items-center justify-between">
                                 <span class="text-md font-semibold text-gray-900">Rp.{{ number_format($kost->harga, 0, ',', '.') }} (perbulan)</span>

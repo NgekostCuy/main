@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ResetPasswordMail;
+use App\Models\Kost;
 use App\Models\PasswordResetToken;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
@@ -17,12 +18,8 @@ class LoginController extends Controller
         return view('auth.login');
     }
     function home() {
-        return view('index');
-    }
-
-    public function detail()
-    {
-        return view('detail'); // Ganti dengan nama view yang sesuai
+        $kosts = Kost::all();
+        return view('index', compact('kosts'));
     }
 
     public function favorite()
@@ -48,7 +45,7 @@ class LoginController extends Controller
             if(Auth::user()->role == 'admin'){
                 return redirect('/dashboard/admin')-> with('success', 'Halo Admin');;
             }else if(Auth::user()->role == 'user'){
-                return redirect('/dashboard/user');
+                return redirect('home');
             }else if(Auth::user()->role == 'owner'){
                 return redirect('/dashboard/owner')-> with('success', 'Halo Owner');
             }
@@ -101,7 +98,7 @@ class LoginController extends Controller
         if (!$getToken) {
             return redirect()->route('/')->with('success','invalid token');
         }
-        return view('validasi-token', compact('token'));
+        return view('auth.validasi-token', compact('token'));
     }
 
     function validation_forgot_password_act(Request $request) {

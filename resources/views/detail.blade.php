@@ -13,10 +13,10 @@
 <body>
     <header class='border-b bg-white font-sans min-h-[60px] px-4 py-3 mx-5 relative tracking-wide z-50'>
         <div class='flex flex-wrap items-center max-lg:gap-y-6'>
-            <a href='/' class='hover:text-[#007bff] text-[15px] text-teal-600 block font-extrabold text-lg'>NgekostCuy</a>
+            <a href='/' class='hover:text-[#007bff] text-sm md:text-xl text-teal-600 block font-extrabold'>NgekostCuy</a>
             
             <div class="flex-grow flex justify-center items-center max-lg:flex-col">
-                <div class="flex items-center">
+                <div class="flex items-center hidden md:flex">
                     <input type="text" placeholder="Search..." class="border rounded-md px-4 py-2 w-full max-w-[250px]" />
                     <button class="ml-2 bg-teal-600 text-white px-4 py-2 rounded-md">Search</button>
                 </div>
@@ -31,23 +31,27 @@
             <div id="menu" class='hidden lg:flex lg:items-center md:justify-center ml-auto space-x-4'>
                 <ul class='lg:flex lg:gap-x-10 max-lg:flex-col max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-2/3 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:px-10 max-lg:py-4 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50'>
                     <li class='mb-6 hidden max-lg:block md:text-center'>
-                        <a href='/' class='hover:text-[#007bff] text-[15px] text-teal-600 block font-extrabold text-lg'>NgekostCuy</a>
+                        <a href='/index.html' class='hover:text-[#007bff] text-[15px] text-teal-600 block font-extrabold text-lg'>NgekostCuy</a>
                     </li>
                     <li class='max-lg:border-b max-lg:py-3 flex items-center justify-center'>
-                        <a href='javascript:void(0)' class='hover:text-[#007bff] text-[15px] text-gray-700 block font-bold'>Promosikan Kosmu Disini</a>
+                        <a href='/dashboard/owner' class='hover:text-[#007bff] text-[15px] text-gray-700 block font-bold'>Promosikan Kosmu Disini</a>
                     </li>
                     <li class='max-lg:border-b max-lg:py-3 flex items-center justify-center'>
-                        <a href='/favorit' class='hover:text-[#007bff] text-[15px] text-gray-700 block font-bold'>Favorit</a>
+                        <a href='favorit' class='hover:text-[#007bff] text-[15px] text-gray-700 block font-bold'>Favorit</a>
                     </li>
                     @auth
-                        foto profil
-                    @endauth
+                        <li class='max-lg:border-b max-lg:py-3 flex justify-center'>
+                            <button class="bg-teal-600 px-5 py-2 rounded">
+                                <a href='/logout' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Logout</a>
+                            </button>
+                            {{-- <p>{{ Auth::user()->name }}</p> --}}
+                        </li>
 
-                    @guest
-                        
+                    @endauth
+                    @guest     
                     <li class='max-lg:border-b max-lg:py-3 flex justify-center'>
                         <button class="bg-teal-600 px-5 py-2 rounded">
-                            <a href='/login' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Login</a>
+                            <a href='login' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Login</a>
                         </button>
                     </li>
                     @endguest
@@ -56,7 +60,7 @@
         </div>
     </header>
     
-    <section class="image-gallery m-10">
+    {{-- <section class="image-gallery m-10">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
             <div class="lg:col-span-2">
                 <div class="relative">
@@ -87,23 +91,41 @@
             </div>
         </div>
         
+    </section> --}}
+
+    <section class="image-gallery m-10">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+            <div class="lg:col-span-2">
+                @if(isset($kost->images[0]))
+                <div>
+                    <div class="relative">
+                        <img class="h-64 w-full object-cover rounded-lg" src="{{ asset('images/' . $kost->images[0]->image) }}" alt="">
+                    </div>
+                </div>
+            @endif
+            </div>
+            <div class="grid grid-cols-2 gap-8 md:gap-y-8 lg:col-span-3">
+                @foreach($kost->images->slice(1) as $image)
+    <div>
+        <div class="relative">
+            <img class="h-32 w-full object-cover rounded-lg" src="{{ asset('images/' . $image->image) }}" alt="">
+        </div>
+    </div>
+@endforeach
+            </div>
+        </div>
     </section>
 
     <section class="content flex flex-row justify-between items-start">
         <div class="mx-10 border-b-2 py-3 flex justify-between items-center">
             <div>
-                <h2 class="lg:text-2xl md:text-xl sm:text-lg font-semibold">Kost Putra Alghifari Bangau Sakti Panam</h2>
+                <h2 class="lg:text-2xl md:text-xl sm:text-lg font-semibold" >{{ $kost->nama_kost }}</h2>
                 <div class="flex items-center">
                     <a type="button" class="rounded-full text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center me-2">Kost Putra</a>
                     <span class="text-sm text-gray-700 underline font-medium">Nusa Ceningan, Indonesia</span>
                 </div>
     
-                <h2 class="mt-5 lg:text-2xl md:text-xl sm:text-lg font-semibold">Kost dikelola oleh Habib</h2>
-                <div class="flex">
-                    <span class="text-sm text-gray-700 underline font-medium">5 orang/kamar |</span>
-                    <span class="text-sm text-gray-700 underline font-medium">5 orang/kamar |</span>
-                    <span class="text-sm text-gray-700 underline font-medium">5 orang/kamar</span>
-                </div>
+                <h2 class="mt-5 lg:text-2xl md:text-xl sm:text-lg font-semibold">Kost dikelola oleh {{ $kost->nama_pemilik }}</h2>
                 <div class="mt-2 text-gray-700">
                     <h2 class="lg:text-2xl md:text-xl sm:text-lg font-semibold mt-10">
                         Fasilitas Umum
@@ -112,17 +134,7 @@
                     <div class="flex flex-row gap-2 justify-between">
                         <div>
                             <ul class="list-disc list-inside">
-                                <li>Kamar Mandi Dalam</li>
-                                <li>Wastafel</li>
-                                <li>Air Panas</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <ul class="list-disc list-inside">
-                                <li>Kamar Mandi Dalam</li>
-                                <li>Wastafel</li>
-                                <li>Air Panas</li>
+                               <li> {{ $kost->fasilitas_kost }} </li> 
                             </ul>
                         </div>
                     </div>
@@ -136,21 +148,9 @@
                     <div class="flex flex-row gap-2 justify-between">
                         <div>
                             <ul class="list-disc list-inside">
-                                <li>Kamar Mandi Dalam</li>
-                                <li>Wastafel</li>
-                                <li>Air Panas</li>
+                               <li> {{ $kost->peraturan_kost }}</li>
                             </ul>
                         </div>
-                    </div>
-                </div>
-
-                <div class="mt-2 text-gray-700">
-                    <h2 class="lg:text-2xl md:text-xl sm:text-lg font-semibold mt-10">
-                        Fasilitas Umum
-                    </h2>
-
-                    <div class="flex flex-row max-w-lg text-sm leading-relaxed overflow-hidden">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque aperiam, error minima quidem nemo ab animi excepturi exercitationem repellat nostrum quia reprehenderit dolore minus. Architecto commodi nemo impedit cupiditate! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptas quidem tempore eligendi. Illo, fugit reprehenderit. Exercitationem quas dicta quis, rem non neque, quam facilis facere ab optio recusandae iure.
                     </div>
                 </div>
 
@@ -180,19 +180,13 @@
                 <div class="flex flex-row justify-between">
                     <div>
                         <p class="mb-3 font-normal text-gray-700">Harga</p>
-                        <p class="mb-3 font-normal text-gray-700">Harga</p>
-                        <p class="mb-3 font-normal text-gray-700">Harga</p>
                     </div>
                     <div>
-                        <p class="mb-3 font-normal text-gray-700">Rp. 200.000</p>
-                        <p class="mb-3 font-normal text-gray-700">Rp. 200.000</p>
-                        <p class="mb-3 font-normal text-gray-700">Rp. 0.000</p>
+                        <p class="mb-3 font-normal text-gray-700">Rp {{ $kost->harga }}</p>
                     </div>
                 </div>
     
-                <p class="underline text-sm text-teal-500 my-3">lihat harga lainnya</p>
-    
-                <a href="#" class="w-full inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-teal-600 rounded-full hover:bg-teal-900 focus:ring-4 focus:outline-none focus:ring-blue-300 justify-center">
+                <a href="https://api.whatsapp.com/send/?phone=%2B62{{$kost->no_telepon}}" class="w-full inline-flex items-center px-3 py-2 text-sm font-medium text-center justify-center text-white bg-teal-600 rounded-full hover:bg-teal-900 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     Chat Owner
                 </a>
             </div>

@@ -1,27 +1,28 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Images;
 class Kost extends Model
 {
-    protected $table = 'kost';
-    
+    use HasFactory;
+    protected $table = 'kosts';
+
     protected $fillable = [
-        'nama',
-        'deskripsi',
-        'peraturan',
+        'nama_kost',
+        'deskripsi_kost',
+        'peraturan_kost',
+        'fasilitas_kost',
         'nama_pemilik',
-        'nomor_hp',
+        'no_telepon',
         'harga',
         'jumlah_kamar',
-        'main_image',
+        'cover'
     ];
 
     public function images()
     {
-        return $this->hasMany(KostImage::class);
+        return $this->hasMany(Images::class, 'kost_id');
     }
 }

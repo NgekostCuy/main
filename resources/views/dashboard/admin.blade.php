@@ -65,7 +65,7 @@
                                 @php
                                     $latestImage = $kost->images->sortByDesc('created_at')->first();
                                 @endphp
-                                <img src="{{ asset('storage/' . $latestImage->file_path) }}" class="object-cover h-24 md:h-full" alt="{{ $kost->nama }}">
+                                <img src="{{ asset('storage/' . $latestImage->file_path) }}" class="object-cover h-24 md:h-full" alt="{{ $kost->na/ma }}">
                             @else
                                 <img src="{{ asset('../../public/img/kost_1') }}" class="object-cover h-24 md:h-16" alt="Default Image"> <!-- Gambar default jika tidak ada -->
                             @endif
