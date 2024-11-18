@@ -56,7 +56,7 @@ class LoginController extends Controller
 
     function logout() {
         Auth::logout();
-        return redirect('/login');
+        return redirect('home');
     }
 
     function forgot_password() {

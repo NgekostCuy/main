@@ -35,6 +35,8 @@ Route::get('/favorit', function ()  {
 
 Route::get('/', [KostController::class, 'index']);
 
+Route::get('/logout',[LoginController::class, 'logout']);
+
 Route::get('/detail/{id}', [KostController::class, 'detail'])->name('detail');
 
 Route::middleware(['auth'])->group(function(){

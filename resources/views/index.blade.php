@@ -285,7 +285,7 @@
     </section>
 
 
-    <section class="category-kampus m-10">
+    {{-- <section class="category-kampus m-10">
         <h2 class="font-medium text-xl mb-5">Berdasarkan Area Kampus</h2>
         <div class="grid gap-4 grid-cols-1">
             <div class="container-universitas grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"> <!-- Gunakan grid untuk kolom -->
@@ -352,7 +352,7 @@
                 
             </div>
         </div>
-    </section>
+    </section> --}}
         
 
     

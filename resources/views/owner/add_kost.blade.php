@@ -40,6 +40,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin: 10px 10px;
+            display: none;
         }
         #saveButton:hover, #deleteButton:hover {
             background-color: #45a049;

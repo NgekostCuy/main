@@ -23,16 +23,26 @@
                 <li class='mb-6 hidden max-lg:block md:text-center'>
                     <a href='/index.html' class='hover:text-[#007bff] text-[15px] text-teal-600 block font-extrabold text-lg'>NgekostCuy</a>
                 </li>
-                <li class='max-lg:border-b max-lg:py-3 flex items-center justify-center'>
-                    <a href='/dashboard/owner' class='hover:text-[#007bff] text-[15px] text-gray-700 block font-bold'>Promosikan Kosmu Disini</a>
-                </li>
+
+                @auth
+                    @if(auth()->user()->role == 'owner')
+                        <li class='max-lg:border-b max-lg:py-3 flex justify-center'>
+                            <button class="bg-teal-600 px-5 py-2 rounded">
+                                <a href='/dashboard/owner' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Promosikan Kost Anda</a>
+                            </button>
+                        </li>
+                    @endif
+                @endauth
+                
                 @auth
                     <li class='max-lg:border-b max-lg:py-3 flex justify-center'>
                         <button class="bg-teal-600 px-5 py-2 rounded">
-                            <a href='logout' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Logout</a>
+                            <a href='/logout' class='hover:text-[#007bff] text-white font-bold text-[15px] block'>Logout</a>
                         </button>
                     </li>
                 @endauth
+
+                
                 @guest     
                 <li class='max-lg:border-b max-lg:py-3 flex justify-center'>
                     <button class="bg-teal-600 px-5 py-2 rounded">
