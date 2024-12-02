@@ -39,6 +39,12 @@ Route::get('/logout',[LoginController::class, 'logout']);
 
 Route::get('/detail/{id}', [KostController::class, 'detail'])->name('detail');
 
+Route::get('symlink', function(){
+    $targetfolder = storage_path('/home/kostcuym/public_html/images');
+    $linkfolder = $_SERVER['DOCUMENT_ROOT'].'/home/kostcuym/laravel/public/images';
+    symlink($targetfolder,$linkfolder);
+});
+
 Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard',[DashboardController::class, 'index']);
     Route::get('/dashboard/admin',[DashboardController::class, 'admin'])->middleware('UserAkses:admin');

@@ -25,20 +25,20 @@
     <div class="flex grid gap-4 m-5">       
         <div class="flex">
             <div class="flex">
-            @if(isset($kost->images[0]))
-            <img class=" max-w-[50%] rounded-lg mx-2" src="{{ asset('images/' . $kost->images[0]->image) }}" alt="">
-            @endif
-            <div class="grid grid-cols-2 gap-2">
-                @foreach($kost->images->slice(1)->take(4) as $image)
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/' . $image->image) }}" alt="">
+                @if(isset($kost->images[0]))
+                <img class=" max-w-[50%] rounded-lg mx-2" src="{{ asset('images/' . $kost->images[0]->image) }}" alt="">
+                @endif
+                <div class="grid grid-cols-2 gap-2">
+                    @foreach($kost->images->slice(1)->take(4) as $image)
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/' . $image->image) }}" alt="">
+                    </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
-
         </div>
     </div>
-
+    
     <section class="content flex flex-row justify-between items-start">
         <div class="mx-10 border-b-2 py-3 flex justify-between items-center">
             <div>
